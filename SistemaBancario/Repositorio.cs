@@ -1,18 +1,20 @@
 ﻿namespace SistemaBancario
 {
-    class Repositorio<T> where T : Conta
+    class Repositorio
     {
-        Dictionary<int, T> listaContas = new();
-        public void Insere(T objConta)
+        private static Dictionary<int, Conta> listaContas = new();
+        public static void Insere(Conta conta)
         {
-            listaContas.Add(objConta.Numero, objConta);
+            listaContas.Add(conta.Numero, conta);
         }
-        public T? BuscaConta(int numero)
+        public static bool VerificaNumConta(int numero)
         {
-            if (listaContas.TryGetValue(numero, out T? conta))
-                return conta;
-            else
-                return null;
+            return listaContas.ContainsKey(numero);
+
+        }
+        public static Conta BuscaConta(int numero)
+        {
+            return listaContas[numero];
         }
     }
 }

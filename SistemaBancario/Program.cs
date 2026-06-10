@@ -1,256 +1,32 @@
 ﻿using SistemaBancario;
 
-Repositorio<Conta> contas = new();
-Repositorio<ContaPoupanca> contasPoupanca = new();
-Repositorio<ContaInvestimento> contasInvestimento = new();
-string? nome;
-byte tipoConta;
-decimal valor;
-int numero;
+byte opcao;
 
 while (true)
 {
     Console.WriteLine("## SISTEMA BANCÁRIO ##\n");
 
     Console.WriteLine("1. Criar Conta\t2. Depositar\t3. Sacar\t4. Exibir Informações");
-    Console.Write("\nDigite o número correspondente a uma das opções abaixo: ");
-    int opcao = Convert.ToInt32(Console.ReadLine());
+
+    do
+    {
+        Console.Write("\nDigite o número correspondente a uma das opções abaixo: ");
+    }
+    while (!byte.TryParse(Console.ReadLine(), out opcao));
 
     switch (opcao)
     {
         case 1:
-            do
-            {
-                Console.Clear();
-                Console.WriteLine("=== CRIAR CONTA ===\n");
-                Console.Write("Digite seu nome: ");
-                nome = Console.ReadLine();
-
-                Console.Write("Digite um número para identificação da conta: ");
-                numero = Convert.ToInt32(Console.ReadLine());
-
-                Console.WriteLine("\n1. Conta Corrente\t2. Conta Poupança\t3. Conta Investimento\n");
-                Console.Write("Digite o número correspondente ao tipo de conta que deseja criar: ");
-                tipoConta = Convert.ToByte(Console.ReadLine());
-
-                if (nome == null || nome == "" || numero == 0)
-                {
-                    Console.WriteLine("\nValores Inválidos! Pressione qualquer tecla para tentar novamente...");
-                    Console.ReadKey();
-                    continue;
-                }
-                else
-                {
-                    switch (tipoConta)
-                    {
-                        case 1:
-                            contas.Insere(new Conta(nome, numero));
-                            break;
-                        case 2:
-                            contasPoupanca.Insere(new ContaPoupanca(nome, numero));
-                            break;
-                        case 3:
-                            contasInvestimento.Insere(new ContaInvestimento(nome, numero));
-                            break;
-                    }
-                    Console.WriteLine("\nConta criada com sucesso! Pressione qualquer tecla para sair...");
-                    Console.ReadKey();
-                    break;
-                }
-            }
-            while (true);
+            CriarConta();
             break;
         case 2:
-            Console.Clear();
-            Console.WriteLine("=== DEPÓSITO ===\n");
-            Console.Write("Digite o número da conta: ");
-            numero = Convert.ToInt32(Console.ReadLine());
-
-            Console.WriteLine("\n1. Conta Corrente\t2. Conta Poupança\t3. Conta Investimento");
-            Console.Write("\nDigite o número correspondente ao tipo de conta: ");
-            tipoConta = Convert.ToByte(Console.ReadLine());
-
-            Console.Write("Digite o valor que deseja depositar: ");
-            valor = Convert.ToDecimal(Console.ReadLine());
-
-            switch (tipoConta)
-            {
-                case 1:
-                    Conta? conta = contas.BuscaConta(numero);
-
-                    if (conta != null)
-                    {
-                        conta.Depositar(valor);
-                        Console.WriteLine("\nPressione qualquer tecla para sair...");
-                        Console.ReadKey();
-                    }
-                    else
-                    {
-                        Console.WriteLine("Conta inexistente...");
-                        Console.WriteLine("\nPressione qualquer tecla para sair...");
-                        Console.ReadKey();
-                    }
-                    break;
-                case 2:
-                    ContaPoupanca? contaPoupanca = contasPoupanca.BuscaConta(numero);
-
-                    if (contaPoupanca != null)
-                    {
-                        contaPoupanca.Depositar(valor);
-                        Console.WriteLine("\nPressione qualquer tecla para sair...");
-                        Console.ReadKey();
-                    }
-                    else
-                    {
-                        Console.WriteLine("Conta inexistente...");
-                        Console.WriteLine("\nPressione qualquer tecla para sair...");
-                        Console.ReadKey();
-                    }
-                    break;
-                case 3:
-                    ContaInvestimento? contaInvestimento = contasInvestimento.BuscaConta(numero);
-
-                    if (contaInvestimento != null)
-                    {
-                        contaInvestimento.Depositar(valor);
-                        Console.WriteLine("\nPressione qualquer tecla para sair...");
-                        Console.ReadKey();
-                    }
-                    else
-                    {
-                        Console.WriteLine("Conta inexistente...");
-                        Console.WriteLine("\nPressione qualquer tecla para sair...");
-                        Console.ReadKey();
-                    }
-                    break;
-            }
+            Deposito();
             break;
         case 3:
-            Console.Clear();
-            Console.WriteLine("=== SAQUE ===\n");
-            Console.Write("Digite o número da conta: ");
-            numero = Convert.ToInt32(Console.ReadLine());
-
-            Console.WriteLine("\n1. Conta Corrente\t2. Conta Poupança\t3. Conta Investimento");
-            Console.Write("\nDigite o número correspondente ao tipo de conta: ");
-            tipoConta = Convert.ToByte(Console.ReadLine());
-
-            Console.Write("Digite o valor que deseja sacar: ");
-            valor = Convert.ToDecimal(Console.ReadLine());
-
-            switch (tipoConta)
-            {
-                case 1:
-                    Conta? conta = contas.BuscaConta(numero);
-
-                    if (conta != null)
-                    {
-                        conta.Sacar(valor);
-                        Console.WriteLine("\nPressione qualquer tecla para sair...");
-                        Console.ReadKey();
-                    }
-                    else
-                    {
-                        Console.WriteLine("Conta inexistente...");
-                        Console.WriteLine("\nPressione qualquer tecla para sair...");
-                        Console.ReadKey();
-                    }
-                    break;
-                case 2:
-                    ContaPoupanca? contaPoupanca = contasPoupanca.BuscaConta(numero);
-
-                    if (contaPoupanca != null)
-                    {
-                        contaPoupanca.Sacar(valor);
-                        Console.WriteLine("\nPressione qualquer tecla para sair...");
-                        Console.ReadKey();
-                    }
-                    else
-                    {
-                        Console.WriteLine("Conta inexistente...");
-                        Console.WriteLine("\nPressione qualquer tecla para sair...");
-                        Console.ReadKey();
-                    }
-                    break;
-                case 3:
-                    ContaInvestimento? contaInvestimento = contasInvestimento.BuscaConta(numero);
-
-                    if (contaInvestimento != null)
-                    {
-                        contaInvestimento.Sacar(valor);
-                        Console.WriteLine("\nPressione qualquer tecla para sair...");
-                        Console.ReadKey();
-                    }
-                    else
-                    {
-                        Console.WriteLine("Conta inexistente...");
-                        Console.WriteLine("\nPressione qualquer tecla para sair...");
-                        Console.ReadKey();
-                    }
-                    break;
-            }
+            Saque();
             break;
         case 4:
-            Console.Clear();
-            Console.WriteLine("=== INFORMAÇÕES DA CONTA ===\n");
-            Console.Write("Digite o número da conta: ");
-            numero = Convert.ToInt32(Console.ReadLine());
-
-            Console.WriteLine("\n1. Conta Corrente\t2. Conta Poupança\t3. Conta Investimento");
-            Console.Write("\nDigite o número correspondente ao tipo de conta: ");
-            tipoConta = Convert.ToByte(Console.ReadLine());
-
-            switch (tipoConta)
-            {
-                case 1:
-                    Conta? conta = contas.BuscaConta(numero);
-
-                    if (conta != null)
-                    {
-                        conta.ExibirInfo();
-                        Console.WriteLine("\nPressione qualquer tecla para sair...");
-                        Console.ReadKey();
-                    }
-                    else
-                    {
-                        Console.WriteLine("Conta inexistente...");
-                        Console.WriteLine("\nPressione qualquer tecla para sair...");
-                        Console.ReadKey();
-                    }
-                    break;
-                case 2:
-                    ContaPoupanca? contaPoupanca = contasPoupanca.BuscaConta(numero);
-
-                    if (contaPoupanca != null)
-                    {
-                        contaPoupanca.ExibirInfo();
-                        Console.WriteLine("\nPressione qualquer tecla para sair...");
-                        Console.ReadKey();
-                    }
-                    else
-                    {
-                        Console.WriteLine("Conta inexistente...");
-                        Console.WriteLine("\nPressione qualquer tecla para sair...");
-                        Console.ReadKey();
-                    }
-                    break;
-                case 3:
-                    ContaInvestimento? contaInvestimento = contasInvestimento.BuscaConta(numero);
-
-                    if (contaInvestimento != null)
-                    {
-                        contaInvestimento.ExibirInfo();
-                        Console.WriteLine("\nPressione qualquer tecla para sair...");
-                        Console.ReadKey();
-                    }
-                    else
-                    {
-                        Console.WriteLine("Conta inexistente...");
-                        Console.WriteLine("\nPressione qualquer tecla para sair...");
-                        Console.ReadKey();
-                    }
-                    break;
-            }
+            ExibirInfo();
             break;
         default:
             Console.WriteLine("\nOpção Inválida! Pressione qualquer tecla para tentar novamente...");
@@ -258,4 +34,161 @@ while (true)
             break;
     }
     Console.Clear();
+}
+// serviços
+static void CriarConta()
+{
+    int numero;
+    byte tipoConta;
+    do
+    {
+        Console.Clear();
+        Console.WriteLine("=== CRIAR CONTA ===\n");
+        Console.Write("Digite seu nome: ");
+        string nome = Console.ReadLine();
+
+        while (true)
+        {
+            Console.Write("Digite um número para identificação da conta: ");
+            if (int.TryParse(Console.ReadLine(), out numero))
+            {
+                if (!Repositorio.VerificaNumConta(numero))
+                    break;
+                else
+                {
+                    Console.WriteLine("Este número de conta já existe, digite outro!");
+                    continue;
+                }
+            }
+            else
+                Console.WriteLine("Valor Inválido! Digite um número inteiro.");
+        }
+
+        Console.WriteLine("\n1. Conta Corrente\t2. Conta Poupança\t3. Conta Investimento\n");
+        while (true)
+        {
+            Console.Write("Digite o número correspondente ao tipo de conta que deseja criar: ");
+            if (byte.TryParse(Console.ReadLine(), out tipoConta) && tipoConta >= 1 && tipoConta <= 3)
+                break;
+            else
+                Console.WriteLine("Valor Inválido! Digite uma das opções válidas (1, 2 ou 3)!");
+        }
+
+        try
+        {
+            switch (tipoConta)
+            {
+                case 1:
+                    Repositorio.Insere(new Conta(nome, numero));
+                    break;
+                case 2:
+                    Repositorio.Insere(new ContaPoupanca(nome, numero));
+                    break;
+                case 3:
+                    Repositorio.Insere(new ContaInvestimento(nome, numero));
+                    break;
+            }
+        }
+        catch (ArgumentException ex)
+        {
+            Console.WriteLine(ex.Message);
+            continue;
+        }
+        Console.WriteLine("\nConta criada com sucesso! Pressione qualquer tecla para sair...");
+        Console.ReadKey();
+        break;
+    }
+    while (true);
+}
+static void Deposito()
+{
+    Console.Clear();
+    Console.WriteLine("=== DEPÓSITO ===\n");
+
+    Conta conta = ObterConta();
+
+    do
+    {
+        decimal valor = LerValor("Digite o valor que deseja depositar: ");
+
+        try
+        {
+            conta.Depositar(valor); //POLIMORFISMO - pelo método ser virtual o runtime analisa em tempo de execução o tipo real do objeto, e não sua referência
+            break;
+        }
+        catch (ArgumentOutOfRangeException ex)
+        {
+            Console.WriteLine(ex.Message);
+            continue;
+        }
+    }
+    while (true);
+}
+static void Saque()
+{
+    Console.Clear();
+    Console.WriteLine("=== SAQUE ===\n");
+
+    Conta conta = ObterConta();
+
+    do
+    {
+        decimal valor = LerValor("Digite o valor que deseja sacar: ");
+
+        try
+        {
+            conta.Sacar(valor); //POLIMORFISMO - pelo método ser virtual o runtime analisa em tempo de execução o tipo real do objeto, e não sua referência
+            break;
+        }
+        catch (ArgumentOutOfRangeException ex)
+        {
+            Console.WriteLine(ex.Message);
+            continue;
+        }
+    }
+    while (true);
+}
+static void ExibirInfo()
+{
+    Console.Clear();
+    Console.WriteLine("=== INFORMAÇÕES DA CONTA ===\n");
+
+    Conta conta = ObterConta();
+
+    Console.WriteLine(conta.ToString());
+}
+// métodos aux.
+static Conta ObterConta()
+{
+    while (true)
+    {
+        Console.Write("Digite o número da conta: ");
+        if (int.TryParse(Console.ReadLine(), out int numero))
+        {
+            if (Repositorio.VerificaNumConta(numero))
+            {
+                return Repositorio.BuscaConta(numero);
+            }
+            else
+            {
+                Console.WriteLine("Esta conta não existe! Digite novamente...");
+                continue;
+            }
+        }
+        else
+            Console.WriteLine("Valor Inválido! Digite um número inteiro.");
+    }
+}
+static decimal LerValor(string mensagem)
+{
+    while (true)
+    {
+        Console.Write(mensagem);
+        if (decimal.TryParse(Console.ReadLine(), out decimal valor))
+        {
+                return valor;
+        }
+        else
+            Console.WriteLine("Valor Inválido!");
+    }
 }
