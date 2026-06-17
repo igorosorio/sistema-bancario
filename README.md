@@ -1,4 +1,33 @@
-# Sistema Bancário
-Projeto desenvolvido para consolidar conceitos de POO (Herança, Polimorfismo, Encapsulamento, Abstração) e Generics, além de praticar e melhorar organização de código. A ideia surgiu a partir de um exercício do Curso C# Essencial (.NET 9.0, LINQ e IA) da Udemy, e aproveitei para tentar aplicar alguns outros conceitos em cima da proposta. A seguir o enunciado do exercício original:
+# Sistema Bancário em C#
 
-<img width="1400" height="710" alt="image" src="https://github.com/user-attachments/assets/e50b8159-bd51-4b9d-b471-8259b1a13aaa" />
+Projeto desenvolvido para praticar conceitos de Programação Orientada a Objetos utilizando C#.
+
+## Funcionalidades
+
+* Criar conta
+* Depósito
+* Saque
+* Consultar informações da conta
+
+## Conceitos aplicados
+
+* Encapsulamento
+* Herança
+* Polimorfismo (`virtual` e `override`)
+* Tratamento de exceções
+* Coleções (`Dictionary`)
+* Validação de entrada
+* Separação de responsabilidades
+
+## Estrutura
+
+* `Conta` → classe base
+* `ContaPoupanca` → aplica juros em depósitos
+* `ContaInvestimento` → aplica juros e imposto
+* `Repositorio` → armazenamento das contas
+* `Program` → interface via console
+
+## Tecnologias
+
+* C#
+* .NET
